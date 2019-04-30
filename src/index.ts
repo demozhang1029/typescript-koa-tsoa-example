@@ -1,13 +1,17 @@
+import Koa from 'koa';
+import Router from 'koa-router';
+import bodyParser from 'koa-bodyparser';
 
-interface Person {
-  firstName: string;
-  lastName: string;
-}
+const app = new Koa();
+const router = new Router();
 
-function greeter(person: Person) {
-  return `Hello ${person.firstName} ${person.lastName}`;
-}
+router.get('/', (ctx) => {
+  ctx.body = 'Hello Koa';
+});
 
-const user = {firstName: 'Jane', lastName: 'Test'}
+app
+  .use(bodyParser())
+  .use(router.routes())
+  .use(router.allowedMethods());
 
-console.log(greeter(user));
+app.listen(3000);
